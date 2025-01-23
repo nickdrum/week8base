@@ -42,7 +42,8 @@ function logoutA() {
 function deleteA() {
   setEmail(email);
   setPword(pword);
- 
+  debug("deleteA", "Delete: "  + email + " password: " + pword);      
+
 }
 
   return (
