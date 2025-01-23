@@ -6,43 +6,46 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
 
-const [loginout, setloginout] = useState('Login');
-const [created, setCreate] = useState('create');
-const [pword, setPword] = useState('password');
-const [user, setUser] = useState('email');
-const [text, onChangeText] = useState('email');
-const [text2, onChangeText2] = useState('password');
+  const [loginout, setloginout] = useState('Login');
+  const [created, setCreate] = useState('Create');
+  const [pword, setPword] = useState('password');
+  const [email, setEmail] = useState('email@mail.com');
+  
+  let n = 0;
+  
+  async function debug(tag: String, str: String) {
+    console.log(tag + "No. " + n.toString(), str);
+    n++;    
+  }
+  
+  function loginA() {
+    setEmail(email);
+    setPword(pword);
+  
+      debug("loginA", "login: " + email + " password: " + pword + "success");   
+  }
+  
+  
+  function createA() {
+    setEmail(email);
+    setPword(pword);
+  
+      debug("createA", "created: "  + email + " password: " + pword);      
+  }
+  
+  function logoutA() {
+    setEmail('');
+    setPword('');
+   
+    debug("LogoutA", "logout: "  + email + " password: " + pword);      
+  }
 
-function loginA() {
-  setUser(user);
-  setPword(text2);
-  if (loginout === 'logout')  {
-       setloginout('login');
-       debug("loginA", "login: " + user + " password: " + pword);
-  } else {
-       setloginout('logout');
-       debug("loginA", "logout: "  + user + " password: " + pword);
-  }    
-}
-
-function debug(tag: String, str: String) {
-  console.log(tag, str);
-}
-
-
-function createA() {
-  setUser(user);
-  setPword(text2);
-  if (created === 'create')  {
-      setCreate('created');
-      debug("createA", "created: "  + user + " password: " + pword);
-    } else {
-      setCreate('create');
-      debug("createA","create: " + user + " password: " + pword)
-    }    
-      
-    }
-
+  function deleteA() {
+    setEmail(email);
+    setPword(pword);
+    debug("DeleteA", "Delete: "  + email + " password: " + pword);      
+  
+  }
 
   return (
     <SafeAreaProvider>
@@ -58,8 +61,8 @@ function createA() {
           </View>
           <View style = {styles.rowContainer}>
             <TextInput style = {styles.sUser}
-            onChangeText = {setUser}
-            value={user} />
+            onChangeText = {setEmail}
+            value={email} />
             <TextInput style = {styles.sUser}
             secureTextEntry={true}
             onChangeText = {setPword}
@@ -68,12 +71,20 @@ function createA() {
 
           <View style = {styles.rowContainer}>
             <Button
-              title = {loginout}
+              title = "login"
               onPress={()=>loginA()} >
              </Button>
              <Button
-              title = {created}
+              title = "Create"
               onPress={()=>createA()} >
+             </Button>
+             <Button
+              title = "Logout"
+              onPress={()=>logoutA()} >
+             </Button>
+             <Button
+              title = "Delete"
+              onPress={()=>deleteA()} >
              </Button>
           </View>
        </View>
