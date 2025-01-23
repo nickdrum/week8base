@@ -9,26 +9,18 @@ import { getAnalytics } from "firebase/analytics";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
 //https://firebase.google.com/docs/reference/js/auth
-
+import { getFirestore } from "firebase/firestore";
+//https://firebase.google.com/docs/reference/js/firestore_.md
+import { collection, addDoc } from "firebase/firestore"; 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-import * as dotenv from 'dotenv';
-dotenv.config();
+import '../../firebase';
 
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_apiKey,
-  authDomain: process.env.FIREBASE_authDomain,
-  projectId: process.env.FIREBASE_projectId,
-  storageBucket: process.env.FIREBASE__storageBucket,
-  messagingSenderId: process.env.FIREBASE_messagingSenderId,
-  appId: process.env.FIREBASE_appId,
-  measurementId: process.env.FIREBASE_measurementId,
-};
-
+const {firebaseConfig} = require('../../firebase.js');
 
 export default function HomeScreen() {
-
+  
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
@@ -39,10 +31,23 @@ const [loginout, setloginout] = useState('Login');
 const [created, setCreate] = useState('create');
 const [pword, setPword] = useState('password');
 const [email, setEmail] = useState('email@mail.com');
-const [loggedIn, setloggedIn] = useState('');
 
-function debug(tag: String, str: String) {
-  console.log(tag, str);
+const db = getFirestore(app);
+let n = 0;
+
+async function debug(tag: String, str: String) {
+  console.log(tag + "No. " + n.toString(), str);
+  n++;
+  try {
+    const docRef = await addDoc(collection(db, "Debug"), {
+      Tag: tag + "No. " + n.toString(),
+      Str: str,
+    });  
+    console.log("Write to firestore", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+  
 }
 
 function loginA() {
