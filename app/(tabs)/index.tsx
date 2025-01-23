@@ -8,14 +8,20 @@ export default function HomeScreen() {
 
 const [loginout, setloginout] = useState('Login');
 const [created, setCreate] = useState('create');
+const [pword, setPword] = useState('password');
+const [user, setUser] = useState('email');
+const [text, onChangeText] = useState('email');
+const [text2, onChangeText2] = useState('password');
 
 function loginA() {
+  setUser(user);
+  setPword(text2);
   if (loginout === 'logout')  {
        setloginout('login');
-       debug("loginA", "login");
+       debug("loginA", "login: " + user + " password: " + pword);
   } else {
        setloginout('logout');
-       debug("loginA", "logout");
+       debug("loginA", "logout: "  + user + " password: " + pword);
   }    
 }
 
@@ -25,12 +31,14 @@ function debug(tag: String, str: String) {
 
 
 function createA() {
+  setUser(user);
+  setPword(text2);
   if (created === 'create')  {
       setCreate('created');
-      debug("createA", "created");
+      debug("createA", "created: "  + user + " password: " + pword);
     } else {
       setCreate('create');
-      debug("createA","create")
+      debug("createA","create: " + user + " password: " + pword)
     }    
       
     }
@@ -47,6 +55,15 @@ function createA() {
             <Text>
               {created}
             </Text>
+          </View>
+          <View style = {styles.rowContainer}>
+            <TextInput style = {styles.sUser}
+            onChangeText = {setUser}
+            value={user} />
+            <TextInput style = {styles.sUser}
+            secureTextEntry={true}
+            onChangeText = {setPword}
+            value={pword}/>
           </View>
 
           <View style = {styles.rowContainer}>
@@ -80,5 +97,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 30,
   },
- 
+ sUser: {},
 });
